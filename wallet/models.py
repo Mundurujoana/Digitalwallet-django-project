@@ -52,7 +52,6 @@ class Transaction(models.Model):
     transaction_type=models.CharField(max_length=10, choices=TRANSACTION_CHOICES,null=True)
     transaction_charge=models.IntegerField()
     transaction_date=models.DateTimeField(default=timezone.now)
-    # receipt=models.ForeignKey('Receipts',on_delete=models.CASCADE, related_name='Transaction_receipt')
     original_account=models.ForeignKey('Account', on_delete=models.CASCADE, related_name='Transaction_original_account')
     destination_account=models.ForeignKey('Account', on_delete=models.CASCADE, related_name='Transaction_destination_account')
 
