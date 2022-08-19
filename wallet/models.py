@@ -1,6 +1,5 @@
 from django.db import models
 from django.forms import DateTimeField
-# from email.policy import models
 from django.utils import timezone
 
 # Create your models here.
