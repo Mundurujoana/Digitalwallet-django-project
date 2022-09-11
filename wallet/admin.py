@@ -40,8 +40,8 @@ class NotificationsAdmin(admin.ModelAdmin):
 admin.site.register(Notifications, NotificationsAdmin)
 
 class ReceiptsAdmin(admin.ModelAdmin):
-    list_display=('receipt_type','recipt_number','account','total_Amount','transaction','recipt_File','receipt_date')
-    search_fields=('receipt_type','recipt_number','account','total_Amount','transaction','recipt_File','receipt_date')
+    list_display=('status','receipt_type','receipt_number','account','total_Amount','transaction','receipt_File','receipt_date')
+    search_fields=('status','receipt_type','receipt_number','account','total_Amount','transaction','receipt_File','receipt_date')
 admin.site.register(Receipts, ReceiptsAdmin)
 
 class LoanAdmin(admin.ModelAdmin):

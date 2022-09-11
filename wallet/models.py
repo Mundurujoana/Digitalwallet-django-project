@@ -19,10 +19,10 @@ class Customer(models.Model):
 
 class Wallet(models.Model):
   currency =models.ForeignKey('Currency', on_delete=models.CASCADE, related_name ='Wallet_currency')
-  customer=models.ForeignKey('Customer', on_delete=models.CASCADE, related_name ='Wallet_customer')
+  customer = models.ForeignKey('Customer', on_delete=models.CASCADE, related_name ='Wallet_customer')
   userId =models.CharField(max_length=50, null=True)
-  balance=models.IntegerField()
-  amount=models.IntegerField()
+  balance = models.IntegerField()
+  amount = models.IntegerField()
   date=models.DateTimeField(default=timezone.now)
   status_choices = ('a', 'active'),('i', 'inactive')
   status=models.CharField(max_length=50,choices=status_choices, null=True)
@@ -30,11 +30,11 @@ class Wallet(models.Model):
 
 
 class Account(models.Model):
- account_number=models.IntegerField(default=0)
- account_type=models.CharField(max_length=50,null=True)
- balance=models.IntegerField()
- account_name=models.CharField(max_length=50,null=True)
- wallet=models.ForeignKey('Wallet',on_delete=models.CASCADE, related_name ='Account_wallet')
+ account_number = models.IntegerField(default=0)
+ account_type = models.CharField(max_length=50,null=True)
+ balance = models.IntegerField()
+ account_name = models.CharField(max_length=50,null=True)
+ wallet = models.ForeignKey('Wallet',on_delete=models.CASCADE, related_name ='Account_wallet')
 
     
 class Transaction(models.Model):
@@ -53,12 +53,12 @@ class Transaction(models.Model):
 
 
 class Card(models.Model):
- date_Issued=models.DateTimeField(default=timezone.now)
- card_name=models.CharField(max_length=50,null=True)
- card_number=models.IntegerField()
- issuer_choices=(('Master', 'Mastercard'),('visa', 'visacard'))
- card_type=models.CharField(max_length=20, choices=issuer_choices,null=True)
- expiry_date=models.DateTimeField(default=timezone.now)
+ date_Issued = models.DateTimeField(default=timezone.now)
+ card_name = models.CharField(max_length=50,null=True)
+ card_number = models.IntegerField()
+ issuer_choices = (('Master', 'Mastercard'),('visa', 'visacard'))
+ card_type = models.CharField(max_length=20, choices=issuer_choices,null=True)
+ expiry_date = models.DateTimeField(default=timezone.now)
  status_choices=(('d', 'debit'),('c', 'credit'))
  card_status= models.CharField(max_length=1, choices=status_choices,null=True)
  cvv_security=models.IntegerField()
@@ -90,13 +90,14 @@ class Notifications(models.Model):
 
 class Receipts(models.Model):
  status_choices = (('deposits', 'Bank deposits'),('withdrawals', 'Cash withdrawals'),('loan', 'loan payments'),('creditcard', 'creditcard payments'))
+ status=models.CharField(max_length=15, choices=status_choices,null=True)
  receipt_type=models.CharField(max_length=30, choices=status_choices, null=True)
  receipt_date=models.DateTimeField(default=timezone.now)
- recipt_number=models.CharField(max_length=30, null=True)
+ receipt_number=models.CharField(max_length=30, null=True)
  account=models.ForeignKey('Account', on_delete=models.CASCADE, related_name ='Receipts_account')
  total_Amount=models.IntegerField()
  transaction=models.ForeignKey('Transaction', on_delete=models.CASCADE, related_name ='Receipts_transaction')
- recipt_File=models.FileField(upload_to='wallet/')
+ receipt_File=models.FileField(upload_to='wallet/')
 
 
 class Loan(models.Model):
@@ -113,16 +114,16 @@ class Loan(models.Model):
 
 
 class Reward(models.Model):  
- transaction=models.ForeignKey('Transaction', on_delete=models.CASCADE, related_name ='Reward_transaction')
- date=models.DateTimeField(default=timezone.now)
- customer=models.ForeignKey('Customer', on_delete=models.CASCADE, related_name ='Reward_customer')
+ transaction = models.ForeignKey('Transaction', on_delete=models.CASCADE, related_name ='Reward_transaction')
+ date = models.DateTimeField(default=timezone.now)
+ customer = models.ForeignKey('Customer', on_delete=models.CASCADE, related_name ='Reward_customer')
  gender_choices = (('m', 'male'),('f', 'female'),)
  gender = models.CharField(max_length=5, choices=gender_choices,null=True) 
- bonus=models.CharField(max_length=30, null=True)
+ bonus = models.CharField(max_length=30, null=True)
 
 class Currency(models.Model):
  amount = models.IntegerField()
- country_of_origin=models.CharField(max_length=30, null=True)
+ country_of_origin = models.CharField(max_length=30, null=True)
 
 
         
