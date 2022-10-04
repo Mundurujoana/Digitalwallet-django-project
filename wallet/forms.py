@@ -1,5 +1,4 @@
 
-
 from django import forms
 from .models import Customer,Wallet,Account,Transaction,Card,ThirdParty,Notifications,Receipts,Loan,Reward,Currency
 # from. means current directory
@@ -16,6 +15,9 @@ class WalletRegistrationForm(forms.ModelForm):
      class Meta:
         model = Wallet
         fields = "__all__"
+        # widgets = {
+        #     'birthday': forms.TextInput(attrs={'class': 'datepicker'})
+        # }
 
 class AccountRegistrationForm(forms.ModelForm):
      class Meta:
