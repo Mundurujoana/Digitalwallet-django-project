@@ -4,6 +4,7 @@ from .models import Customer,Wallet,Account,Transaction,Card,ThirdParty,Notifica
 # it renders http requests
 
 
+
 # Create your views here.
 def register_customer(request):
     # #    creat an instance of the class CustomerResigrationForm
@@ -292,3 +293,5 @@ def edit_receipt_profile(request, id):
     else:
             form = ReceiptsRegistrationForm(instance = receipt)
     return render(request, "wallet/edit_receipt.html",{'form':form})
+
+
