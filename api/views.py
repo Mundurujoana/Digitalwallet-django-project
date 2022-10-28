@@ -2,6 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from wallet.models import Customer, Notifications, Wallet, Loan, Receipts, Transaction, Card, Account
 from . import serializers
+from rest_framework import views
+from rest_framework.response import Response
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 #Customer
@@ -18,6 +21,20 @@ class WalletViewSet(viewsets.ModelViewSet):
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = serializers.AccountSerializer
+
+class AccountDepositView(views.APIView):
+
+    def post(self, request, format=None):       
+            account_id = request.data["account_id"]
+            amount = request.data["amount"]
+            try:
+                account = Account.objects.get(id=account_id)
+            except ObjectDoesNotExist:
+                return Response("Account Not Found", status=404)
+            
+            message, status = account.deposit(amount)
+            return Response(message, status=status)
+
 
 #Card
 class CardViewSet(viewsets.ModelViewSet):

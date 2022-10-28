@@ -30,13 +30,43 @@ class Wallet(models.Model):
 
 
 class Account(models.Model):
- account_number = models.IntegerField(default=0)
- account_type = models.CharField(max_length=50,null=True)
- balance = models.IntegerField()
- account_name = models.CharField(max_length=50,null=True)
- wallet = models.ForeignKey('Wallet',on_delete=models.CASCADE, related_name ='Account_wallet')
 
+
+  account_number = models.IntegerField(default=0)
+  account_type = models.CharField(max_length=50,null=True)
+  balance = models.IntegerField()
+  account_name = models.CharField(max_length=50,null=True)
+  wallet = models.ForeignKey('Wallet',on_delete=models.CASCADE, related_name ='Account_wallet')
+
+  def deposit(self, amount):
+            if amount <= 0:
+                message =  "Invalid amount"
+                status = 403
+            else:
+                self.balance += amount
+                self.save()
+                message = f"You have deposited {amount}, your new balance is {self.balance}"
+                status = 200
+            return message, status
     
+  def transfer(self, destination, amount):
+       if amount <= 0:
+           message =  "Invalid amount"
+           status = 403
+      
+       elif amount < self.account_balance:
+           message =  "Insufficient balance"
+           status = 403
+      
+       else:
+           self.account_balance -= amount
+           self.save()
+           destination.deposit(amount)
+          
+           message = f"You have transfered {amount}, your new balance is {self.account_balance}"
+           status = 200
+       return message, status
+       
 class Transaction(models.Model):
  transaction_ref=models.CharField(max_length=255,null=True)
  wallet=models.ForeignKey('Wallet', on_delete=models.CASCADE, related_name = 'Transaction_wallet')
